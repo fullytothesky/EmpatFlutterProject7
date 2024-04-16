@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
-import 'package:sixth_state2_project/shop_state_model.dart';
+import 'package:sixth_state2_project/models/preferences_state_model.dart';
+import 'package:sixth_state2_project/models/shop_state_model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class AfterPurchaseWidget extends StatefulWidget {
@@ -27,45 +28,42 @@ class _AfterPurchaseWidgetState extends State<AfterPurchaseWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
+      appBar: AppBar(),
       body: Container(
         alignment: Alignment.center,
-        color: Colors.black,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
               "Дякуємо за замовлення!",
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w800),
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
             ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-                children: [
-                  const TextSpan(
-                      text:
-                          "Менторам Емпату безкоштовно!\nОчікуйте кур'єра до офісу Empat.\nНомер замовлення:\n"),
-                  TextSpan(
-                    text:
-                        "${Provider.of<ShopStateModel>(context, listen: false).getOrderID()}",
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 35),
-                  )
-                ],
-              ),
+            Consumer<PreferencesStateModel>(
+              builder: (context, value, child) {
+                return RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: TextStyle(
+                      color: value.savedTheme == "light"
+                          ? Colors.black
+                          : Colors.white,
+                      fontSize: 20,
+                    ),
+                    children: [
+                      const TextSpan(
+                          text:
+                              "Менторам Емпату безкоштовно!\nОчікуйте кур'єра до офісу Empat.\nНомер замовлення:\n"),
+                      TextSpan(
+                        text:
+                            "${Provider.of<ShopStateModel>(context, listen: false).getOrderID()}",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 35),
+                      )
+                    ],
+                  ),
+                );
+              },
             ),
             Column(
               children: [
@@ -76,7 +74,7 @@ class _AfterPurchaseWidgetState extends State<AfterPurchaseWidget> {
                     return buildImage(imgAddress, index);
                   },
                   options: CarouselOptions(
-                    height: 500,
+                    height: 400,
                     onPageChanged: (index, reason) {
                       setState(
                         () {
@@ -102,6 +100,20 @@ class _AfterPurchaseWidgetState extends State<AfterPurchaseWidget> {
       child: Image.network(
         imgUrl,
         fit: BoxFit.cover,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Container(
+            color: Provider.of<PreferencesStateModel>(context, listen: true)
+                        .savedTheme ==
+                    'light'
+                ? const Color.fromARGB(255, 181, 180, 176)
+                : const Color.fromARGB(255, 0, 0, 0),
+            height: 500,
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        },
       ),
     );
   }
