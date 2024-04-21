@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sixth_state2_project/apple_news.dart';
 import 'package:sixth_state2_project/selected_items_cart/cart_screen_widget.dart';
 import 'package:sixth_state2_project/shop_screen/devices_zone.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,12 @@ void main() {
         ) {
           value.loadTheme();
           return MaterialApp(
+            //adding routes
+            initialRoute: '/',
+            routes: {
+              '/': (context)=>const SplashScreen(),
+              '/news': (context)=>const AppleNews(), 
+            },
             theme: ThemeData(
               brightness: value.savedTheme == 'light'
                   ? Brightness.light
@@ -29,7 +36,7 @@ void main() {
               textTheme: GoogleFonts.golosTextTextTheme(),
             ),
             debugShowCheckedModeBanner: false,
-            home: const SplashScreen(),
+          //  home: const SplashScreen(),
           );
         },
       ),

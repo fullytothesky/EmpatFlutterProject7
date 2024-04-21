@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:sixth_state2_project/drawer/accessories.dart';
 import 'package:sixth_state2_project/drawer/stores.dart';
 import 'package:sixth_state2_project/drawer/preferences_drawer.dart';
 import 'package:sixth_state2_project/models/preferences_state_model.dart';
@@ -30,14 +31,16 @@ class DevicesZone extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                      flex: 1,
-                      child: Container(
-                          height: 100,
-                          decoration: const BoxDecoration(),
-                          child: Image.asset(
-                            "assets/img/user_default.png",
-                            fit: BoxFit.contain,
-                          ))),
+                    flex: 1,
+                    child: Container(
+                      height: 100,
+                      decoration: const BoxDecoration(),
+                      child: Image.asset(
+                        "assets/img/user_default.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
                   Expanded(
                     flex: 2,
                     child: Column(
@@ -50,21 +53,24 @@ class DevicesZone extends StatelessWidget {
                                 padding: const EdgeInsets.only(left: 15.0),
                                 child: RichText(
                                   text: TextSpan(
-                                      text: "привіт, ",
-                                      style: GoogleFonts.golosText(
-                                          textStyle: TextStyle(
+                                    text: "привіт, ",
+                                    style: GoogleFonts.golosText(
+                                      textStyle: TextStyle(
                                         fontSize: 20,
                                         color: prefs.savedTheme == "light"
                                             ? Colors.black
                                             : Colors.white,
-                                      )),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: '${prefs.savedUsername}',
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 25))
-                                      ]),
+                                      ),
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: '${prefs.savedUsername}',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 25),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               );
                             },
@@ -87,6 +93,12 @@ class DevicesZone extends StatelessWidget {
               Icons.apple,
               "Завітайте до нас",
               const StoreWidget(),
+            ),
+            buildTile(
+              context,
+              Icons.accessibility_new_sharp,
+              "Корисне",
+              const AccessoriesWidget(),
             )
           ],
         ),

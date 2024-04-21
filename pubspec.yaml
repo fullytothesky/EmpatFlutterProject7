@@ -89,6 +89,11 @@ flutter:
     - assets/img/user_default.png
     - assets/img/apple_store.jpg
     - assets/img/apl1.jpg
+    - assets/img/apple_news.jpg
+    - assets/img/trade_in.jpg
+    - assets/img/service1.jpg
+    - assets/img/service2.jpg
+    - assets/img/service3.jpeg
     - assets/animations/hPoBhSGVlS.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
