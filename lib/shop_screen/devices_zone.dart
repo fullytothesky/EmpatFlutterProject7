@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:sixth_state2_project/anim.dart';
 import 'package:sixth_state2_project/drawer/accessories.dart';
 import 'package:sixth_state2_project/drawer/stores.dart';
 import 'package:sixth_state2_project/drawer/preferences_drawer.dart';
@@ -144,21 +145,25 @@ class DevicesZone extends StatelessWidget {
                               context,
                               "Apple iPhone 15",
                               34.999,
+                              "Phones"
                             ),
                             itemBuilder(
                               context,
                               "Apple iPhone 15 Pro",
                               53.999,
+                              "Phones"
                             ),
                             itemBuilder(
                               context,
                               "Apple iPhone 15 Pro Max",
                               48.999,
+                              "Phones"
                             ),
                             itemBuilder(
                               context,
                               "Apple iPhone 13",
                               30.999,
+                              "Phones"
                             ),
                           ],
                         ),
@@ -211,21 +216,25 @@ class DevicesZone extends StatelessWidget {
                               context,
                               "MacBook Air 13",
                               34.999,
+                              "Laptops"
                             ),
                             itemBuilder(
                               context,
                               "MacBook Air 15",
                               53.999,
+                              "Laptops"
                             ),
                             itemBuilder(
                               context,
                               "MacBook Pro 14",
                               48.999,
+                              "Laptops"
                             ),
                             itemBuilder(
                               context,
                               "MacBook Pro 16",
                               30.999,
+                              "Laptops"
                             ),
                           ],
                         ),
@@ -279,16 +288,19 @@ class DevicesZone extends StatelessWidget {
                               context,
                               "Apple AirPods Pro",
                               9.999,
+                              "Headphones"
                             ),
                             itemBuilder(
                               context,
                               "Apple AirPods Max",
                               22.999,
+                              "Headphones"
                             ),
                             itemBuilder(
                               context,
                               "Apple AirPods 3",
                               10.999,
+                              "Headphones"
                             ),
                           ],
                         ),
@@ -304,9 +316,10 @@ class DevicesZone extends StatelessWidget {
     );
   }
 
-  Widget itemBuilder(context, String name, double price) {
+  Widget itemBuilder(context, String name, double price, String category) {
     String formattedPrice = price.toStringAsFixed(3);
     String formattedName = name.replaceAll(' ', '');
+    
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -338,9 +351,26 @@ class DevicesZone extends StatelessWidget {
                     topLeft: Radius.circular(20),
                     bottomLeft: Radius.circular(20),
                   ),
-                  child: Image(
-                    image: AssetImage("assets/img/$formattedName.jpg"),
-                    fit: BoxFit.cover,
+                  child: GestureDetector(
+                    onTap:() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>DeviceAnimatedScreen(
+                                passedName: name,
+                                passedPrice: price,
+                                passedCategory:category
+                              ),
+                            ),
+                          );
+                    },
+                    child: Hero(
+                      tag: formattedName,
+                      child: Image(
+                        image: AssetImage("assets/img/$formattedName.jpg"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
                 Padding(
@@ -395,6 +425,7 @@ class DevicesZone extends StatelessWidget {
                             name,
                             price,
                           );
+                        
                         },
                         style: const ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(
